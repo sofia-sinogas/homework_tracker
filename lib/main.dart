@@ -14,7 +14,7 @@ class HomeworkTrackerApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Homework Tracker',
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: ThemeData(primarySwatch: Colors.purple),
       home: const SplashScreen(),
     );
   }
@@ -50,7 +50,7 @@ class _SplashScreenState extends State<SplashScreen> {
           'Homework Tracker',
           style: TextStyle(
             fontSize: 28,
-            color: Colors.white,
+            color: const Color.fromARGB(255, 255, 0, 0),
             fontWeight: FontWeight.bold,
           ),
         ),

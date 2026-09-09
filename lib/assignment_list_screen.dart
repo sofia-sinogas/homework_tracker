@@ -59,12 +59,18 @@ class _AssignmentListScreenState extends State<AssignmentListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 162, 199, 229),
       appBar: AppBar(title: const Text('Assignments')),
       body: ListView.builder(
         itemCount: _assignments.length,
         itemBuilder:(context, index) {
           return CheckboxListTile(
-            title: Text(_assignments[index]['title']),
+            title: Text(
+              _assignments[index]['title'],
+              style: TextStyle(
+                decoration: _assignments[index]['completed']
+                ? TextDecoration.lineThrough : TextDecoration.none),
+              ),
             value: _assignments[index]['completed'],
             onChanged: (value) => _toggleCompleted(index, value),
           ); // CheckboxListTile

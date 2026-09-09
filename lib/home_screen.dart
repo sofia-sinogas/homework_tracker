@@ -12,6 +12,7 @@ class HomeScreen extends StatelessWidget {
           children: [
             const Text(
               'Welcome to the Homework Tracker!',
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
