@@ -30,7 +30,7 @@ class _CourseListScreenState extends State<CourseListScreen> {
                 ),
               TextField(
                 decoration: const InputDecoration(labelText: 'Description (Optional)'),
-                onChanged: (value) => name = value,
+                onChanged: (value) => description = value,
               ),
             ],
           ),

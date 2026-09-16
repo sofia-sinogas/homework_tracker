@@ -35,7 +35,9 @@ class _AssignmentListScreenState extends State<AssignmentListScreen> {
           TextButton(
             onPressed: (){
               if (newAssignmentTitle.trim().isNotEmpty) {
-                _presenter.addAssignment(newAssignmentTitle.trim());
+                setState(() {
+                  _presenter.addAssignment(newAssignmentTitle.trim());
+                });
                 Navigator.pop(context); // Close dialog
               }
             },
@@ -60,13 +62,27 @@ class _AssignmentListScreenState extends State<AssignmentListScreen> {
         itemBuilder:(context, index) {
           final assignment = assignments[index];
           return CheckboxListTile(
-            title: Text(assignment.title),
+            title: Text(
+              assignment.title,
+              style: TextStyle(
+                decoration: assignment.isCompleted 
+                ? TextDecoration.lineThrough : TextDecoration.none,
+              ),
+            ),
             value: assignment.isCompleted,
             onChanged: (value) {
               setState(() {
                 _presenter.toggleCompleted(index);
               });
             },
+            secondary: IconButton(
+              icon: const Icon(Icons.delete),
+              onPressed: () {
+                setState(() {
+                  _presenter.deleteAssignment(index);
+                });
+              },
+            ),
           );
         },
       ),
