@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'home_screen.dart';
 import 'assignment_list_screen.dart';
+import 'course_list_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -12,10 +13,11 @@ class MainNavigationScreen extends StatefulWidget {
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _selectedIndex = 0;
 
-  // Two screens: Home and Assignments
+  // Three screens: Home, Assignments, and Courses
   final List<Widget> _screens = [
     const HomeScreen(),
     const AssignmentListScreen(),
+    const CourseListScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -36,9 +38,15 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             icon: Icon(Icons.home),
             label: 'Home',
           ), // BottomNavigationBarItem
+
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
             label: 'Assignments',
+          ), // BottomNavigationBarItem
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.book),
+            label: 'Courses',
           ), // BottomNavigationBarItem
         ],
       ), // BottomNavigationBar
