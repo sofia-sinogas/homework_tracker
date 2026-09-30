@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'home_screen.dart';
 import 'assignment_list_screen.dart';
 import 'course_list_screen.dart';
+import 'profile_screen.dart'; // Import the ProfileScreen
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -18,6 +19,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     const HomeScreen(),
     const AssignmentListScreen(),
     const CourseListScreen(),
+    ProfileScreen(), // Add the ProfileScreen here
   ];
 
   void _onItemTapped(int index) {
