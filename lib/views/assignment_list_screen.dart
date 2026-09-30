@@ -10,6 +10,20 @@ class AssignmentListScreen extends StatefulWidget{
 
 class _AssignmentListScreenState extends State<AssignmentListScreen> {
   final AssignmentPresenter _presenter = AssignmentPresenter();
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadAssignments();
+  }
+
+  Future<void> _loadAssignments() async {
+    await _presenter.loadAssignments();
+    setState(() {
+      _isLoading = false;
+    });
+  }
 
   void _showAddAssignmentDialog() {
     String newAssignmentTitle = '';
@@ -27,19 +41,21 @@ class _AssignmentListScreenState extends State<AssignmentListScreen> {
             newAssignmentTitle = value;
           },
         ),
+        
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
             child: const Text('Cancel'),
           ),
+
           TextButton(
-            onPressed: (){
+            onPressed: () async {
               if (newAssignmentTitle.trim().isNotEmpty) {
+                await _presenter.addAssignment(newAssignmentTitle.trim());
                 setState(() {
-                  _presenter.addAssignment(newAssignmentTitle.trim());
                 });
-                Navigator.pop(context); // Close dialog
               }
+              Navigator.pop(context); // Close dialog
             },
             child: const Text('Add'),
           ),
@@ -57,27 +73,34 @@ class _AssignmentListScreenState extends State<AssignmentListScreen> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 162, 199, 229),
       appBar: AppBar(title: const Text('Assignments')),
-      body: ListView.builder(
+      body: _isLoading?
+      const Center(child: CircularProgressIndicator(),):
+      ListView.builder(
         itemCount: assignments.length,
         itemBuilder:(context, index) {
           final assignment = assignments[index];
+
           return CheckboxListTile(
             title: Text(
               assignment.title,
               style: TextStyle(
-                decoration: assignment.isCompleted 
+                decoration: assignment.isCompleted
                 ? TextDecoration.lineThrough : TextDecoration.none,
               ),
             ),
+
             value: assignment.isCompleted,
-            onChanged: (value) {
+            onChanged: (value) async {
+              await _presenter.toggleCompleted(index);
               setState(() {
                 _presenter.toggleCompleted(index);
               });
             },
+
             secondary: IconButton(
               icon: const Icon(Icons.delete),
-              onPressed: () async{
+              
+              onPressed: () async {
                 await _presenter.deleteAssignment(index);
                 setState(() {
                 });
@@ -86,6 +109,7 @@ class _AssignmentListScreenState extends State<AssignmentListScreen> {
           );
         },
       ),
+
       floatingActionButton: FloatingActionButton(
         onPressed: _showAddAssignmentDialog, // use the dialog function
         child: const Icon(Icons.add),
