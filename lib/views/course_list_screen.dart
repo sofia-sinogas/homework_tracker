@@ -70,34 +70,43 @@ class _CourseListScreenState extends State<CourseListScreen> {
     );
   }
   @override
-Widget build(BuildContext context) {
-  final courses = presenter.courses;
+  Widget build(BuildContext context) {
+    final courses = presenter.courses;
 
-  return Scaffold(
-      appBar: AppBar(
-        title: const Text('Courses'),
-      ),
-      body:
-          _isLoading
-          ?const Center(child: CircularProgressIndicator())
-          : ListView.builder(
-            itemCount: courses.length,
-            itemBuilder: (context, index) {
-              final course = courses[index];
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Courses'),
+        ),
+        body:
+            _isLoading
+            ?const Center(child: CircularProgressIndicator())
+            : ListView.builder(
+              itemCount: courses.length,
+              itemBuilder: (context, index) {
+                final course = courses[index];
 
-              return ListTile(
-                title: Text(course.name),
-                subtitle: course.description != null
-                    ? Text(course.description!)
-                    : null,
-              );
-            },
-          ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _showAddCourseDialog,
-        child: const Icon(Icons.add),
-      ),
-    );
+                return ListTile(
+                  title: Text(course.name),
+                  subtitle: course.description != null
+                      ? Text(course.description!)
+                      : null,
+                  trailing: IconButton(
+                    icon: const Icon(Icons.delete),
+                    onPressed: () async {
+                      await presenter.deleteCourse(index);
+
+                      setState(() {});
+                    },
+                  ),
+                );
+              },
+            ),
+
+        floatingActionButton: FloatingActionButton(
+          onPressed: _showAddCourseDialog,
+          child: const Icon(Icons.add),
+        ),
+      );
   }
 }
 

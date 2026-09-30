@@ -24,4 +24,11 @@ class CoursePresenter {
       ),
     );
   }
+
+  Future<void> deleteCourse(int index) async {
+    await Course.deleteCourse(index, _courses,
+    );
+
+    _courses.removeAt(index);
+  }
 }

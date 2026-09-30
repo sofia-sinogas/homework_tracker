@@ -38,4 +38,19 @@ class Course {
       'userId': userId,
     });
   }
+
+  static Future<void> deleteCourse(int index, List<Course> currentCourses) async {
+    final userId = _auth.currentUser?.uid;
+    if (userId == null||
+        index < 0 ||
+        index >= currentCourses.length) {
+      return;
+    }
+    final snapshot = await _firestore.collection('courses').where(
+      'userId', isEqualTo: userId).get();
+
+    if (snapshot.docs.length > index) {
+      await snapshot.docs[index].reference.delete();
+    }
+  }
 }
