@@ -92,6 +92,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 "Don't have an account? Sign up",
               ),
             ),
+            TextButton(
+              onPressed: () {
+            // reset password
+            },
+              child: const Text('Forgot Password?'),
+            ),
           ],
         ),
       ),

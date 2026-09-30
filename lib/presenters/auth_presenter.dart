@@ -16,4 +16,8 @@ class AuthPresenter {
   Stream authStateChanges() => _model.authStateChanges();
 
   String? getCurrentUserEmail() => _model.currentUser?.email;
+
+  Future<String?> resetPassword(String email) {
+  return _model.resetPassword(email);
+}
 }

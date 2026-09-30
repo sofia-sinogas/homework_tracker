@@ -33,4 +33,13 @@ class AuthModel{
   Stream<User?> authStateChanges() => _auth.authStateChanges();
 
   User? get currentUser => _auth.currentUser;
+
+  Future<String?> resetPassword(String email) async {
+  try {
+    await _auth.sendPasswordResetEmail(email: email);
+    return null;
+  } catch (e) {
+    return e.toString();
+  }
+}
 }
