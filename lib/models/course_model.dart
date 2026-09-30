@@ -7,7 +7,7 @@ class Course {
 
   Course({required this.name,this.description});
 
-  static final _firestone = FirebaseFirestore.instance;
+  static final _firestore = FirebaseFirestore.instance;
   static final _auth = FirebaseAuth.instance;
 
   static Future<List<Course>> fetchCourses() async {
