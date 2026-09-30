@@ -77,9 +77,9 @@ class _AssignmentListScreenState extends State<AssignmentListScreen> {
             },
             secondary: IconButton(
               icon: const Icon(Icons.delete),
-              onPressed: () {
+              onPressed: () async{
+                await _presenter.deleteAssignment(index);
                 setState(() {
-                  _presenter.deleteAssignment(index);
                 });
               },
             ),

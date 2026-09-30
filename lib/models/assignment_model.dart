@@ -64,4 +64,27 @@ class Assignment {
       });
     }
   }
+
+  static Future<void> deleteAssignment(int index,List<Assignment> currentAssignments,) async {
+    final userId = _auth.currentUser?.uid;
+
+    if (userId == null ||
+        index < 0 ||
+        index >= currentAssignments.length) {
+      return;
+    }
+
+    final snapshot = await _db.child('assignments/$userId').get();
+
+    if (snapshot.exists) {
+      final data = Map<String, dynamic>.from(
+        snapshot.value as Map,
+      );
+
+      final entry = data.entries.elementAt(index);
+      await _db
+        .child('assignments/$userId/${entry.key}')
+        .remove();
+    }
+  }
 }
