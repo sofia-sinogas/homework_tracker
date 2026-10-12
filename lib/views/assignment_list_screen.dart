@@ -17,6 +17,7 @@ class _AssignmentListScreenState extends State<AssignmentListScreen> {
   bool _isLoading = true;
   String? _selectedCourseFilter;
   String? _newAssignmentCourse;
+  String _completionFilter = 'All';
   List<String> _courseNames = [];
 
   @override
@@ -119,14 +120,20 @@ class _AssignmentListScreenState extends State<AssignmentListScreen> {
   Widget build(BuildContext context) {
     final assignments = _presenter.assignments;
 
-    final displayedAssignments = _selectedCourseFilter == null
-        ? assignments
-        : assignments
-          .where(
-            (assignment) =>
-              assignment.courseName ==_selectedCourseFilter,
-          )
-          .toList();
+    final displayedAssignments = assignments.where((assignment) {
+    final matchesCourse =
+        _selectedCourseFilter == null ||
+        assignment.courseName == _selectedCourseFilter;
+
+    final matchesCompletion =
+        _completionFilter == 'All' ||
+        (_completionFilter == 'Complete' &&
+            assignment.isCompleted) ||
+        (_completionFilter == 'Incomplete' &&
+            !assignment.isCompleted);
+
+    return matchesCourse && matchesCompletion;
+  }).toList();
 
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 162, 199, 229),
@@ -155,8 +162,33 @@ class _AssignmentListScreenState extends State<AssignmentListScreen> {
                 DropdownMenuItem(value:courseName, child: Text(courseName)),
               ),
             ],
-          )
-        ]
+          ),
+          DropdownButton<String>(
+            value: _completionFilter,
+            dropdownColor: Colors.blue,
+            onChanged: (value) {
+              if (value != null) {
+                setState(() {
+                  _completionFilter = value;
+                });
+              }
+            },
+            items: const [
+              DropdownMenuItem(
+                value: 'All',
+                child: Text('All'),
+              ),
+              DropdownMenuItem(
+                value: 'Incomplete',
+                child: Text('Incomplete'),
+              ),
+              DropdownMenuItem(
+                value: 'Complete',
+                child: Text('Complete'),
+              ),
+            ],
+          ),
+        ],
       ),
 
       body: _isLoading?
