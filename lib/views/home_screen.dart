@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
 
-                      progressColor: Colors.purple,
+                      progressColor: const Color.fromARGB(255, 30, 202, 21),
                       backgroundColor: Colors.grey.shade300,
                       animation: true,
                       animationDuration: 800,
