@@ -25,4 +25,12 @@ class AssignmentPresenter {
     await Assignment.deleteAssignment(index, _assignments);
     _assignments.removeAt(index);
   }
+
+  int get totalAssignments => _assignments.length;
+
+  int get completedAssignments =>
+    _assignments.where((assignment) => assignment.isCompleted).length;
+
+  double get completionRatio =>
+    totalAssignments == 0 ? 0.0 : completedAssignments / totalAssignments;
 }
