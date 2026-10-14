@@ -86,6 +86,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       trailing: Text('${_presenter.completedAssignments}'),
                     ),
                   ),
+
+                  Card(
+                    child: ListTile(
+                      title: const Text('Incomplete Assignments'),
+                      trailing: Text(
+                        '${_presenter.totalAssignments - _presenter.completedAssignments}',
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
